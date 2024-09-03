@@ -601,6 +601,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ZubkoSilicateGrainSizeDistribution>();
     ItemRegistry::add<ZubkoGraphiteGrainSizeDistribution>();
     ItemRegistry::add<ZubkoPAHGrainSizeDistribution>();
+    ItemRegistry::add<HirashitaLogNormalGrainSizeDistribution>();
     ItemRegistry::add<FileGrainSizeDistribution>();
     ItemRegistry::add<ListGrainSizeDistribution>();
     ItemRegistry::add<HirashitaLogNormalGrainSizeDistribution>();
