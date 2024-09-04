@@ -604,7 +604,6 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<HirashitaLogNormalGrainSizeDistribution>();
     ItemRegistry::add<FileGrainSizeDistribution>();
     ItemRegistry::add<ListGrainSizeDistribution>();
-    ItemRegistry::add<HirashitaLogNormalGrainSizeDistribution>();
 
     // grain compositions
     ItemRegistry::add<GrainComposition>();
