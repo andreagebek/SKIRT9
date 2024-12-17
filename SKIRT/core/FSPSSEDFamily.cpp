@@ -27,6 +27,7 @@ void FSPSSEDFamily::setupSelfBefore()
         case IMF::Chabrier: name += "Chabrier"; break;
         case IMF::Kroupa: name += "Kroupa"; break;
         case IMF::Salpeter: name += "Salpeter"; break;
+        case IMF::Variable: name += "Variable"; break;
     }
 
     _table.open(this, name, "lambda(m),Z(1),t(yr)", "Llambda(W/m)", false);

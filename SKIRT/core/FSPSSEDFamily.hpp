@@ -37,10 +37,11 @@
 class FSPSSEDFamily : public SEDFamily
 {
     /** The enumeration type indicating the assumed initial mass function (IMF). */
-    ENUM_DEF(IMF, Chabrier, Kroupa, Salpeter)
+    ENUM_DEF(IMF, Chabrier, Kroupa, Salpeter, Variable)
         ENUM_VAL(IMF, Chabrier, "Chabrier IMF")
         ENUM_VAL(IMF, Kroupa, "Kroupa IMF")
         ENUM_VAL(IMF, Salpeter, "Salpeter IMF")
+        ENUM_VAL(IMF, Variable, "Variable IMF")
     ENUM_END()
 
     ITEM_CONCRETE(FSPSSEDFamily, SEDFamily, "an FSPS SED family for single stellar populations")

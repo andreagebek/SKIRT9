@@ -21,6 +21,7 @@ const SEDFamily* FSPSSED::getFamilyAndParameters(Array& parameters)
         case IMF::Chabrier: imf = FSPSSEDFamily::IMF::Chabrier; break;
         case IMF::Kroupa: imf = FSPSSEDFamily::IMF::Kroupa; break;
         case IMF::Salpeter: imf = FSPSSEDFamily::IMF::Salpeter; break;
+        case IMF::Variable: imf = FSPSSEDFamily::IMF::Variable; break;
     }
 
     // construct the library of SED models
