@@ -3,52 +3,43 @@
 ////       © Astronomical Observatory, Ghent University         ////
 ///////////////////////////////////////////////////////////////// */
 
-#include "FSPSSEDFamily.hpp"
+#include "FSPSvarIMFSEDFamily.hpp"
 #include "Constants.hpp"
 
 ////////////////////////////////////////////////////////////////////
 
-FSPSSEDFamily::FSPSSEDFamily(SimulationItem* parent, IMF imf)
+FSPSvarIMFSEDFamily::FSPSvarIMFSEDFamily(SimulationItem* parent)
 {
     parent->addChild(this);
-    _imf = imf;
     setup();
 }
 
 ////////////////////////////////////////////////////////////////////
 
-void FSPSSEDFamily::setupSelfBefore()
+void FSPSvarIMFSEDFamily::setupSelfBefore()
 {
     SEDFamily::setupSelfBefore();
 
-    string name = "FSPSSEDFamily_";
-    switch (_imf)
-    {
-        case IMF::Chabrier: name += "Chabrier"; break;
-        case IMF::Kroupa: name += "Kroupa"; break;
-        case IMF::Salpeter: name += "Salpeter"; break;
-    }
-
-    _table.open(this, name, "lambda(m),Z(1),t(yr)", "Llambda(W/m)", false);
+    _table.open(this, "FSPSSEDFamily_Variable", "lambda(m),Z(1),t(yr)", "Llambda(W/m)", false);
 }
 
 ////////////////////////////////////////////////////////////////////
 
-vector<SnapshotParameter> FSPSSEDFamily::parameterInfo() const
+vector<SnapshotParameter> FSPSvarIMFSEDFamily::parameterInfo() const
 {
     return {SnapshotParameter::initialMass(), SnapshotParameter::metallicity(), SnapshotParameter::age()};
 }
 
 ////////////////////////////////////////////////////////////////////
 
-Range FSPSSEDFamily::intrinsicWavelengthRange() const
+Range FSPSvarIMFSEDFamily::intrinsicWavelengthRange() const
 {
     return _table.axisRange<0>();
 }
 
 ////////////////////////////////////////////////////////////////////
 
-double FSPSSEDFamily::specificLuminosity(double wavelength, const Array& parameters) const
+double FSPSvarIMFSEDFamily::specificLuminosity(double wavelength, const Array& parameters) const
 {
     double M = parameters[0] / Constants::Msun();
     double Z = parameters[1];
@@ -59,7 +50,7 @@ double FSPSSEDFamily::specificLuminosity(double wavelength, const Array& paramet
 
 ////////////////////////////////////////////////////////////////////
 
-double FSPSSEDFamily::cdf(Array& lambdav, Array& pv, Array& Pv, const Range& wavelengthRange,
+double FSPSvarIMFSEDFamily::cdf(Array& lambdav, Array& pv, Array& Pv, const Range& wavelengthRange,
                           const Array& parameters) const
 {
     double M = parameters[0] / Constants::Msun();
