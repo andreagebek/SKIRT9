@@ -78,6 +78,8 @@
 #include "ExtragalacticUnits.hpp"
 #include "FSPSSED.hpp"
 #include "FSPSSEDFamily.hpp"
+#include "FSPSvarIMFSED.hpp"
+#include "FSPSvarIMFSEDFamily.hpp"
 #include "FieldStrengthCellLibrary.hpp"
 #include "FileBand.hpp"
 #include "FileBorderWavelengthGrid.hpp"
@@ -354,6 +356,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99ContSED>();
     ItemRegistry::add<Starburst99SED>();
     ItemRegistry::add<FSPSSED>();
+    ItemRegistry::add<FSPSvarIMFSED>();
     ItemRegistry::add<BpassSED>();
     ItemRegistry::add<MappingsSED>();
     ItemRegistry::add<ToddlersSED>();
@@ -377,6 +380,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99ContSEDFamily>();
     ItemRegistry::add<Starburst99SEDFamily>();
     ItemRegistry::add<FSPSSEDFamily>();
+    ItemRegistry::add<FSPSvarIMFSEDFamily>();
     ItemRegistry::add<BpassSEDFamily>();
     ItemRegistry::add<FileSSPSEDFamily>();
     ItemRegistry::add<FileIndexedSEDFamily>();
