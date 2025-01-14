@@ -23,6 +23,11 @@ class FSPSvarIMFSED : public FamilySED
         ATTRIBUTE_MAX_VALUE(metallicity, "0.05]")
         ATTRIBUTE_DEFAULT_VALUE(metallicity, "0.02")
 
+        PROPERTY_DOUBLE(alpha, "the high-mass IMF slope of the SSP")
+        ATTRIBUTE_MIN_VALUE(alpha, "[1")
+        ATTRIBUTE_MAX_VALUE(alpha, "2.3]")
+        ATTRIBUTE_DEFAULT_VALUE(alpha, "2.3")
+
         PROPERTY_DOUBLE(age, "the age of the SSP")
         ATTRIBUTE_QUANTITY(age, "time")
         ATTRIBUTE_MIN_VALUE(age, "[0 Gyr")

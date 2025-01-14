@@ -20,14 +20,14 @@ void FSPSvarIMFSEDFamily::setupSelfBefore()
 {
     SEDFamily::setupSelfBefore();
 
-    _table.open(this, "FSPSSEDFamily_Variable", "lambda(m),Z(1),t(yr)", "Llambda(W/m)", false);
+    _table.open(this, "FSPSSEDFamily_Variable", "lambda(m),Z(1),alpha(1),t(yr)", "Llambda(W/m)", false);
 }
 
 ////////////////////////////////////////////////////////////////////
 
 vector<SnapshotParameter> FSPSvarIMFSEDFamily::parameterInfo() const
 {
-    return {SnapshotParameter::initialMass(), SnapshotParameter::metallicity(), SnapshotParameter::age()};
+    return {SnapshotParameter::initialMass(), SnapshotParameter::metallicity(), SnapshotParameter::custom("IMF slope"), SnapshotParameter::age()};
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -43,9 +43,10 @@ double FSPSvarIMFSEDFamily::specificLuminosity(double wavelength, const Array& p
 {
     double M = parameters[0] / Constants::Msun();
     double Z = parameters[1];
-    double t = parameters[2] / Constants::year();
+    double alpha = parameters[2];
+    double t = parameters[3] / Constants::year();
 
-    return M * _table(wavelength, Z, t);
+    return M * _table(wavelength, Z, alpha, t);
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -55,9 +56,10 @@ double FSPSvarIMFSEDFamily::cdf(Array& lambdav, Array& pv, Array& Pv, const Rang
 {
     double M = parameters[0] / Constants::Msun();
     double Z = parameters[1];
-    double t = parameters[2] / Constants::year();
+    double alpha = parameters[2];
+    double t = parameters[3] / Constants::year();
 
-    return M * _table.cdf(lambdav, pv, Pv, wavelengthRange, Z, t);
+    return M * _table.cdf(lambdav, pv, Pv, wavelengthRange, Z, alpha, t);
 }
 
 ////////////////////////////////////////////////////////////////////
