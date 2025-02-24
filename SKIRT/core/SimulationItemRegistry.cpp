@@ -245,6 +245,9 @@
 #include "Sphere2DSpatialGrid.hpp"
 #include "Sphere3DSpatialGrid.hpp"
 #include "SphericalBackgroundSource.hpp"
+#include "SphericalCellGeometry.hpp"
+#include "SphericalCellMedium.hpp"
+#include "SphericalCellSource.hpp"
 #include "SphericalClipGeometryDecorator.hpp"
 #include "SpheroidalGeometryDecorator.hpp"
 #include "SpheroidalGraphiteGrainComposition.hpp"
@@ -260,6 +263,7 @@
 #include "StellarSurfaceSource.hpp"
 #include "StellarUnits.hpp"
 #include "SunSED.hpp"
+#include "SymCosMesh.hpp"
 #include "SymLogMesh.hpp"
 #include "SymPowMesh.hpp"
 #include "TTauriDiskGeometry.hpp"
@@ -332,6 +336,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ParticleSource>();
     ItemRegistry::add<CellSource>();
     ItemRegistry::add<CylindricalCellSource>();
+    ItemRegistry::add<SphericalCellSource>();
     ItemRegistry::add<MeshSource>();
     ItemRegistry::add<AdaptiveMeshSource>();
     ItemRegistry::add<VoronoiMeshSource>();
@@ -460,6 +465,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ParticleGeometry>();
     ItemRegistry::add<CellGeometry>();
     ItemRegistry::add<CylindricalCellGeometry>();
+    ItemRegistry::add<SphericalCellGeometry>();
     ItemRegistry::add<MeshGeometry>();
     ItemRegistry::add<AdaptiveMeshGeometry>();
     ItemRegistry::add<VoronoiMeshGeometry>();
@@ -526,6 +532,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<SymPowMesh>();
     ItemRegistry::add<LogMesh>();
     ItemRegistry::add<SymLogMesh>();
+    ItemRegistry::add<SymCosMesh>();
     ItemRegistry::add<TabulatedMesh>();
     ItemRegistry::add<FileMesh>();
     ItemRegistry::add<ListMesh>();
@@ -538,6 +545,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ParticleMedium>();
     ItemRegistry::add<CellMedium>();
     ItemRegistry::add<CylindricalCellMedium>();
+    ItemRegistry::add<SphericalCellMedium>();
     ItemRegistry::add<MeshMedium>();
     ItemRegistry::add<AdaptiveMeshMedium>();
     ItemRegistry::add<VoronoiMeshMedium>();
