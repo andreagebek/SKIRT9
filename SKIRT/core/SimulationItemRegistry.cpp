@@ -275,6 +275,7 @@
 #include "ThemisDustMix.hpp"
 #include "ToddlersSED.hpp"
 #include "ToddlersSEDFamily.hpp"
+#include "ToddlersSFRNormalizedSEDFamily.hpp"
 #include "TorusGeometry.hpp"
 #include "TreePolicy.hpp"
 #include "TreeSpatialGrid.hpp"
@@ -399,6 +400,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<FileIndexedSEDFamily>();
     ItemRegistry::add<MappingsSEDFamily>();
     ItemRegistry::add<ToddlersSEDFamily>();
+    ItemRegistry::add<ToddlersSFRNormalizedSEDFamily>();
     ItemRegistry::add<SpinFlipSEDFamily>();
     ItemRegistry::add<LyaGaussianSEDFamily>();
     ItemRegistry::add<LyaDoublePeakedSEDFamily>();
