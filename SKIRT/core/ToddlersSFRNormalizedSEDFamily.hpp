@@ -16,6 +16,25 @@
     calculations. */
 class ToddlersSFRNormalizedSEDFamily : public SEDFamily
 {
+    /** The enumeration type indicating the stellar population synthesis model */
+    ENUM_DEF(StellarTemplate, SB99, BPASS)
+        ENUM_VAL(StellarTemplate, SB99, "Uses Starburst99 stellar population models")
+        ENUM_VAL(StellarTemplate, BPASS, "Uses BPASS stellar population models")
+    ENUM_END()
+
+    /** The enumeration type indicating the initial mass function */
+    ENUM_DEF(IMF, kroupa100, chab100, chab300)
+        ENUM_VAL(IMF, kroupa100, "Kroupa IMF from 0.1 to 100 Msun")
+        ENUM_VAL(IMF, chab100, "Chabrier IMF from 0.1 to 100 Msun")
+        ENUM_VAL(IMF, chab300, "Chabrier IMF from 0.1 to 300 Msun")
+    ENUM_END()
+
+    /** The enumeration type indicating the stellar population type */
+    ENUM_DEF(StarType, sin, bin)
+        ENUM_VAL(StarType, sin, "Single star evolution")
+        ENUM_VAL(StarType, bin, "Binary star evolution")
+    ENUM_END()
+
     /** The enumeration type indicating the presence of dust */
     ENUM_DEF(Dust, Yes, No)
         ENUM_VAL(Dust, Yes, "Dust is present in SF regions")
@@ -30,6 +49,15 @@ class ToddlersSFRNormalizedSEDFamily : public SEDFamily
 
     ITEM_CONCRETE(ToddlersSFRNormalizedSEDFamily, SEDFamily,
                  "a TODDLERS SFR-normalized SED family for emission from star-forming regions")
+        PROPERTY_ENUM(stellarTemplate, StellarTemplate, "the stellar population synthesis model")
+        ATTRIBUTE_DEFAULT_VALUE(stellarTemplate, "SB99")
+
+        PROPERTY_ENUM(imf, IMF, "the initial mass function")
+        ATTRIBUTE_DEFAULT_VALUE(imf, "kroupa100")
+
+        PROPERTY_ENUM(starType, StarType, "the stellar population type")
+        ATTRIBUTE_DEFAULT_VALUE(starType, "sin")
+
         PROPERTY_ENUM(dust, Dust, "the presence of dust")
         ATTRIBUTE_DEFAULT_VALUE(dust, "Yes")
 
@@ -74,10 +102,8 @@ private:
 private:
     StoredTable<4> _table;  // 4D table: wavelength, Z, SFE, n_cl
 
-    // Internal configuration (not exposed to users)
-    static constexpr const char* _stellarTemplate = "SB99";      // Currently only SB99 available
-    static constexpr const char* _imf = "kroupa100";            // Currently only Kroupa IMF available
-    static constexpr const char* _starType = "sin";             // Currently only single stars available
+    /** Validates that the template/IMF/star type combination is valid */
+    void validateConfiguration() const;
 };
 
 //////////////////////////////////////////////////////////////////////
