@@ -16,23 +16,11 @@
     calculations. */
 class ToddlersSFRNormalizedSEDFamily : public SEDFamily
 {
-    /** The enumeration type indicating the stellar population synthesis model */
-    ENUM_DEF(StellarTemplate, SB99, BPASS)
-        ENUM_VAL(StellarTemplate, SB99, "Uses Starburst99 stellar population models")
-        ENUM_VAL(StellarTemplate, BPASS, "Uses BPASS stellar population models")
-    ENUM_END()
-
-    /** The enumeration type indicating the initial mass function */
-    ENUM_DEF(IMF, kroupa100, chab100, chab300)
-        ENUM_VAL(IMF, kroupa100, "Kroupa IMF from 0.1 to 100 Msun")
-        ENUM_VAL(IMF, chab100, "Chabrier IMF from 0.1 to 100 Msun")
-        ENUM_VAL(IMF, chab300, "Chabrier IMF from 0.1 to 300 Msun")
-    ENUM_END()
-
-    /** The enumeration type indicating the stellar population type */
-    ENUM_DEF(StarType, sin, bin)
-        ENUM_VAL(StarType, sin, "Single star evolution")
-        ENUM_VAL(StarType, bin, "Binary star evolution")
+    /** The enumeration type indicating the template and its characteristics */
+    ENUM_DEF(TemplateType, SB99Kroupa100Sin, BPASSChab100Bin, BPASSChab300Bin)
+        ENUM_VAL(TemplateType, SB99Kroupa100Sin, "Starburst99 with Kroupa IMF (0.1-100 Msun) and single star evolution")
+        ENUM_VAL(TemplateType, BPASSChab100Bin, "BPASS with Chabrier IMF (0.1-100 Msun) and binary star evolution")
+        ENUM_VAL(TemplateType, BPASSChab300Bin, "BPASS with Chabrier IMF (0.1-300 Msun) and binary star evolution")
     ENUM_END()
 
     /** The enumeration type indicating the presence of dust */
@@ -47,29 +35,33 @@ class ToddlersSFRNormalizedSEDFamily : public SEDFamily
         ENUM_VAL(Resolution, High, "High wavelength resolution (continuum at R=300 and lines at R=5e4)")
     ENUM_END()
 
+    /** The enumeration type indicating the SFR integration period */
+    ENUM_DEF(SFRPeriod, Period10Myr, Period30Myr)
+        ENUM_VAL(SFRPeriod, Period10Myr, "SFR integrated over 10 Myr (default)")
+        ENUM_VAL(SFRPeriod, Period30Myr, "SFR integrated over 30 Myr")
+    ENUM_END()
+
     ITEM_CONCRETE(ToddlersSFRNormalizedSEDFamily, SEDFamily,
                  "a TODDLERS SFR-normalized SED family for emission from star-forming regions")
-        PROPERTY_ENUM(stellarTemplate, StellarTemplate, "the stellar population synthesis model")
-        ATTRIBUTE_DEFAULT_VALUE(stellarTemplate, "SB99")
-
-        PROPERTY_ENUM(imf, IMF, "the initial mass function")
-        ATTRIBUTE_DEFAULT_VALUE(imf, "kroupa100")
-
-        PROPERTY_ENUM(starType, StarType, "the stellar population type")
-        ATTRIBUTE_DEFAULT_VALUE(starType, "sin")
+        PROPERTY_ENUM(templateType, TemplateType, "the stellar template, IMF, and evolution model to use")
+        ATTRIBUTE_DEFAULT_VALUE(templateType, "SB99Kroupa100Sin")
 
         PROPERTY_ENUM(dust, Dust, "the presence of dust")
         ATTRIBUTE_DEFAULT_VALUE(dust, "Yes")
 
         PROPERTY_ENUM(resolution, Resolution, "the wavelength resolution")
         ATTRIBUTE_DEFAULT_VALUE(resolution, "Low")
+
+        PROPERTY_ENUM(sfrPeriod, SFRPeriod, "the SFR integration time period")
+        ATTRIBUTE_DEFAULT_VALUE(sfrPeriod, "Period10Myr")
     ITEM_END()
 
 public:
     /** This constructor can be invoked programmatically by classes that use a hard-coded SED
         family. The newly created object is hooked up as a child to the specified parent in the simulation
         hierarchy, and its setup() function has been called. */
-    explicit ToddlersSFRNormalizedSEDFamily(SimulationItem* parent, Dust dust, Resolution resolution);
+    explicit ToddlersSFRNormalizedSEDFamily(SimulationItem* parent, Dust dust, Resolution resolution, 
+                                          SFRPeriod sfrPeriod = SFRPeriod::Period10Myr);
 
 protected:
     /** This function opens the appropriate resource file (in SKIRT stored table format). */
@@ -101,9 +93,6 @@ private:
 
 private:
     StoredTable<4> _table;  // 4D table: wavelength, Z, SFE, n_cl
-
-    /** Validates that the template/IMF/star type combination is valid */
-    void validateConfiguration() const;
 };
 
 //////////////////////////////////////////////////////////////////////
