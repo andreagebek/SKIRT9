@@ -5,50 +5,65 @@
 
 #include "ToddlersSFRNormalizedSEDFamily.hpp"
 #include "Constants.hpp"
+#include "FatalError.hpp"
 
 ////////////////////////////////////////////////////////////////////
 
 ToddlersSFRNormalizedSEDFamily::ToddlersSFRNormalizedSEDFamily(SimulationItem* parent, Dust dust,
-                                                              Resolution resolution) {
+                                                              Resolution resolution, SFRPeriod sfrPeriod) {
     parent->addChild(this);
     _dust = dust;
     _resolution = resolution;
+    _sfrPeriod = sfrPeriod;
     setup();
 }
 
 ////////////////////////////////////////////////////////////////////
 
-void ToddlersSFRNormalizedSEDFamily::setupSelfBefore() {
-    SEDFamily::setupSelfBefore();
-
-    string name = "ToddlersSFRNormalizedSEDFamily_";
-    name += getResourceNameSuffix();
-
-    _table.open(this, name, "lambda(m),Z(1),SFE(1),n_cl(1/cm3)", "Llambda(W/m)", false);
-}
-
-////////////////////////////////////////////////////////////////////
-
-string ToddlersSFRNormalizedSEDFamily::getResourceNameSuffix() const {
+string ToddlersSFRNormalizedSEDFamily::getResourceNameSuffix() const
+{
     string suffix;
 
-    // Add stellar population parameters (currently fixed)
-    suffix += _stellarTemplate;
-    suffix += "_";
-    suffix += _imf;
-    suffix += "_";
-    suffix += _starType;
+    // Add stellar population parameters based on selected template
+    switch (_templateType)
+    {
+        case TemplateType::SB99Kroupa100Sin:
+            suffix += "SB99_kroupa100_sin";
+            break;
+        case TemplateType::BPASSChab100Bin:
+            suffix += "BPASS_chab100_bin";
+            break;
+        case TemplateType::BPASSChab300Bin:
+            suffix += "BPASS_chab300_bin";
+            break;
+    }
     suffix += "_";
 
     // Add dust option
-    if (_dust == Dust::No) {
+    if (_dust == Dust::No)
+    {
         suffix += "noDust_";
     }
 
     // Add resolution
     suffix += _resolution == Resolution::Low ? "lr" : "hr";
 
+    // Add SFR integration period
+    suffix += _sfrPeriod == SFRPeriod::Period10Myr ? "_10Myr" : "_30Myr";
+
     return suffix;
+}
+
+////////////////////////////////////////////////////////////////////
+
+void ToddlersSFRNormalizedSEDFamily::setupSelfBefore()
+{
+    SEDFamily::setupSelfBefore();
+    
+    string name = "ToddlersSFRNormalizedSEDFamily_";
+    name += getResourceNameSuffix();
+
+    _table.open(this, name, "lambda(m),Z(1),SFE(1),n_cl(1/cm3)", "Llambda(W/m)", false);
 }
 
 ////////////////////////////////////////////////////////////////////
