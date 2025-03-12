@@ -211,6 +211,7 @@
 #include "PredefinedBandWavelengthGrid.hpp"
 #include "ProbeSystem.hpp"
 #include "PseudoSersicGeometry.hpp"
+#include "QuarticSplineSmoothingKernel.hpp"
 #include "QuasarSED.hpp"
 #include "RadialVectorField.hpp"
 #include "RadiationFieldProbe.hpp"
@@ -495,6 +496,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     // smoothing kernels
     ItemRegistry::add<SmoothingKernel>();
     ItemRegistry::add<CubicSplineSmoothingKernel>();
+    ItemRegistry::add<QuarticSplineSmoothingKernel>();
     ItemRegistry::add<ScaledGaussianSmoothingKernel>();
     ItemRegistry::add<UniformSmoothingKernel>();
 
