@@ -52,6 +52,10 @@
 #include "CubicalBackgroundSource.hpp"
 #include "CustomStateProbe.hpp"
 #include "Cylinder2DSpatialGrid.hpp"
+#include "Cylinder3DSpatialGrid.hpp"
+#include "CylindricalCellGeometry.hpp"
+#include "CylindricalCellMedium.hpp"
+#include "CylindricalCellSource.hpp"
 #include "CylindricalClipGeometryDecorator.hpp"
 #include "CylindricalVectorField.hpp"
 #include "DefaultCutsForm.hpp"
@@ -207,6 +211,7 @@
 #include "PredefinedBandWavelengthGrid.hpp"
 #include "ProbeSystem.hpp"
 #include "PseudoSersicGeometry.hpp"
+#include "QuarticSplineSmoothingKernel.hpp"
 #include "QuasarSED.hpp"
 #include "RadialVectorField.hpp"
 #include "RadiationFieldProbe.hpp"
@@ -241,7 +246,11 @@
 #include "SphePowerLawRedistributeGeometryDecorator.hpp"
 #include "Sphere1DSpatialGrid.hpp"
 #include "Sphere2DSpatialGrid.hpp"
+#include "Sphere3DSpatialGrid.hpp"
 #include "SphericalBackgroundSource.hpp"
+#include "SphericalCellGeometry.hpp"
+#include "SphericalCellMedium.hpp"
+#include "SphericalCellSource.hpp"
 #include "SphericalClipGeometryDecorator.hpp"
 #include "SpheroidalGeometryDecorator.hpp"
 #include "SpheroidalGraphiteGrainComposition.hpp"
@@ -257,10 +266,13 @@
 #include "StellarSurfaceSource.hpp"
 #include "StellarUnits.hpp"
 #include "SunSED.hpp"
+#include "SymCosMesh.hpp"
+#include "SymLogMesh.hpp"
 #include "SymPowMesh.hpp"
 #include "TTauriDiskGeometry.hpp"
 #include "TemperatureProbe.hpp"
 #include "TemperatureWavelengthCellLibrary.hpp"
+#include "TetraMeshSpatialGrid.hpp"
 #include "ThemisDustMix.hpp"
 #include "ToddlersSED.hpp"
 #include "ToddlersSEDFamily.hpp"
@@ -326,6 +338,8 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ImportedSource>();
     ItemRegistry::add<ParticleSource>();
     ItemRegistry::add<CellSource>();
+    ItemRegistry::add<CylindricalCellSource>();
+    ItemRegistry::add<SphericalCellSource>();
     ItemRegistry::add<MeshSource>();
     ItemRegistry::add<AdaptiveMeshSource>();
     ItemRegistry::add<VoronoiMeshSource>();
@@ -455,6 +469,8 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ImportedGeometry>();
     ItemRegistry::add<ParticleGeometry>();
     ItemRegistry::add<CellGeometry>();
+    ItemRegistry::add<CylindricalCellGeometry>();
+    ItemRegistry::add<SphericalCellGeometry>();
     ItemRegistry::add<MeshGeometry>();
     ItemRegistry::add<AdaptiveMeshGeometry>();
     ItemRegistry::add<VoronoiMeshGeometry>();
@@ -478,6 +494,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     // smoothing kernels
     ItemRegistry::add<SmoothingKernel>();
     ItemRegistry::add<CubicSplineSmoothingKernel>();
+    ItemRegistry::add<QuarticSplineSmoothingKernel>();
     ItemRegistry::add<ScaledGaussianSmoothingKernel>();
     ItemRegistry::add<UniformSmoothingKernel>();
 
@@ -493,10 +510,12 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     // spatial grids
     ItemRegistry::add<SpatialGrid>();
     ItemRegistry::add<SphereSpatialGrid>();
+    ItemRegistry::add<CylinderSpatialGrid>();
     ItemRegistry::add<Sphere1DSpatialGrid>();
     ItemRegistry::add<Sphere2DSpatialGrid>();
-    ItemRegistry::add<CylinderSpatialGrid>();
     ItemRegistry::add<Cylinder2DSpatialGrid>();
+    ItemRegistry::add<Sphere3DSpatialGrid>();
+    ItemRegistry::add<Cylinder3DSpatialGrid>();
     ItemRegistry::add<BoxSpatialGrid>();
     ItemRegistry::add<CartesianSpatialGrid>();
     ItemRegistry::add<TreeSpatialGrid>();
@@ -504,6 +523,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<FileTreeSpatialGrid>();
     ItemRegistry::add<AdaptiveMeshSpatialGrid>();
     ItemRegistry::add<VoronoiMeshSpatialGrid>();
+    ItemRegistry::add<TetraMeshSpatialGrid>();
 
     // spatial grid policies
     ItemRegistry::add<TreePolicy>();
@@ -513,12 +533,12 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
 
     // one-dimensional meshes for spatial grids
     ItemRegistry::add<Mesh>();
-    ItemRegistry::add<MoveableMesh>();
-    ItemRegistry::add<AnchoredMesh>();
     ItemRegistry::add<LinMesh>();
     ItemRegistry::add<PowMesh>();
     ItemRegistry::add<SymPowMesh>();
     ItemRegistry::add<LogMesh>();
+    ItemRegistry::add<SymLogMesh>();
+    ItemRegistry::add<SymCosMesh>();
     ItemRegistry::add<TabulatedMesh>();
     ItemRegistry::add<FileMesh>();
     ItemRegistry::add<ListMesh>();
@@ -530,6 +550,8 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<ImportedMedium>();
     ItemRegistry::add<ParticleMedium>();
     ItemRegistry::add<CellMedium>();
+    ItemRegistry::add<CylindricalCellMedium>();
+    ItemRegistry::add<SphericalCellMedium>();
     ItemRegistry::add<MeshMedium>();
     ItemRegistry::add<AdaptiveMeshMedium>();
     ItemRegistry::add<VoronoiMeshMedium>();

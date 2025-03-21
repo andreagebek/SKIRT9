@@ -215,12 +215,6 @@ private:
         It assumes that both mass and mass density columns are being imported. */
     void calculateVolume();
 
-    /** This private function calculates the densities and (cumulative) masses for all cells, and
-        logs some statistics. The function assumes that the cell volumes have been calculated,
-        either by building a Voronoi tessellation, or by deriving the volume from mass and mass
-        density columns being imported. */
-    void calculateDensityAndMass();
-
     /** Private function to recursively build a binary search tree (see
         en.wikipedia.org/wiki/Kd-tree) */
     Node* buildTree(vector<int>::iterator first, vector<int>::iterator last, int depth) const;
@@ -383,7 +377,7 @@ public:
         the path is complete and the loop is terminated. If no exit point is found, which shouldn't
         happen too often, this must be due to computational inaccuracies. In that case, no path
         segment is added, the current point is advanced by a small amount, and the new current cell
-        is determined by calling the function whichcell().
+        is determined by calling the function cellIndex().
 
         The algorithm that computes the exit point has the following input data:
         <TABLE>
