@@ -274,6 +274,7 @@
 #include "TemperatureWavelengthCellLibrary.hpp"
 #include "TetraMeshSpatialGrid.hpp"
 #include "ThemisDustMix.hpp"
+#include "ToddlersSED.hpp"
 #include "ToddlersSEDFamily.hpp"
 #include "TorusGeometry.hpp"
 #include "TreePolicy.hpp"
@@ -372,6 +373,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<BpassChabrier100SED>();
     ItemRegistry::add<BpassSED>();
     ItemRegistry::add<MappingsSED>();
+    ItemRegistry::add<ToddlersSED>();
     ItemRegistry::add<TabulatedSED>();
     ItemRegistry::add<FileSED>();
     ItemRegistry::add<ListSED>();
