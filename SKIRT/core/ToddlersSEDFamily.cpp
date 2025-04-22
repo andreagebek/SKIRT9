@@ -5,7 +5,6 @@
 
 #include "ToddlersSEDFamily.hpp"
 #include "Constants.hpp"
-#include "FatalError.hpp"
 
 ////////////////////////////////////////////////////////////////////
 
@@ -19,66 +18,6 @@ ToddlersSEDFamily::ToddlersSEDFamily(SimulationItem* parent, SedMode sedMode, St
     _resolution = resolution;
     _sfrPeriod = sfrPeriod;
     setup();
-}
-
-////////////////////////////////////////////////////////////////////
-
-string ToddlersSEDFamily::getResourceNameSuffix() const
-{
-    string suffix;
-
-    // Add SED mode
-    if (_sedMode == SedMode::Cloud)
-    {
-        suffix += "Cloud_";
-    }
-    else  // SFRNormalized
-    {
-        suffix += "SFRNormalized_";
-    }
-
-    // Add stellar population parameters based on selected template
-    switch (_stellarTemplate)
-    {
-        case StellarTemplate::SB99Kroupa100Sin:
-            suffix += "SB99_kroupa100_sin";
-            break;
-        case StellarTemplate::BPASSChab100Bin:
-            suffix += "BPASS_chab100_bin";
-            break;
-        case StellarTemplate::BPASSChab300Bin:
-            suffix += "BPASS_chab300_bin";
-            break;
-    }
-    suffix += "_";
-
-    // Add dust option
-    if (_includeDust)
-    {
-        suffix += "Dust_";
-    }
-    else
-    {
-        suffix += "noDust_";
-    }
-
-    // Add resolution
-    suffix += _resolution == Resolution::Low ? "lr" : "hr";
-
-    // Add SFR integration period if in SFRNormalized mode
-    if (_sedMode == SedMode::SFRNormalized)
-    {
-        if (_sfrPeriod == SFRPeriod::Period30Myr)
-        {
-            suffix += "_30Myr";
-        }
-        else // Period10Myr
-        {
-            suffix += "_10Myr";
-        }
-    }
-
-    return suffix;
 }
 
 ////////////////////////////////////////////////////////////////////
