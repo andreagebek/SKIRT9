@@ -12,10 +12,12 @@
 const SEDFamily* BpassChabrier100SED::getFamilyAndParameters(Array& parameters)
 {
     // set the parameters using arbitrary scaling
-    NR::assign(parameters, 1., _metallicity, _age);
+    NR::assign(parameters, _metallicity, _SFE, _cloudNumDensity, 1.);
 
     // construct the library of SED models
-    return new BpassChabrier100SEDFamily(this);
+    return new ToddlersSEDFamily(this, ToddlersSEDFamily::SedMode::SFRNormalized,
+                                 ToddlersSEDFamily::StellarTemplate::SB99Kroupa100Sin, true,
+                                 ToddlersSEDFamily::Resolution::High, ToddlersSEDFamily::SFRPeriod::Period10Myr);
 }
 
 ////////////////////////////////////////////////////////////////////
