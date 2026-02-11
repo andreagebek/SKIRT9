@@ -24,7 +24,7 @@ class FSPSvarIMFcontSFHSED : public FamilySED
         ATTRIBUTE_DEFAULT_VALUE(metallicity, "0.02")
 
         PROPERTY_DOUBLE(alpha, "the high-mass IMF slope of the SSP")
-        ATTRIBUTE_MIN_VALUE(alpha, "[1")
+        ATTRIBUTE_MIN_VALUE(alpha, "[1.6")
         ATTRIBUTE_MAX_VALUE(alpha, "2.3]")
         ATTRIBUTE_DEFAULT_VALUE(alpha, "2.3")
 
