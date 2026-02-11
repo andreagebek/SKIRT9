@@ -84,9 +84,11 @@
 #include "FSPSSED.hpp"
 #include "FSPSSEDFamily.hpp"
 #include "FSPSvarIMFSED.hpp"
-#include "FSPSvarIMFcontSFHSED.hpp"
 #include "FSPSvarIMFSEDFamily.hpp"
+#include "FSPSvarIMFcontSFHSED.hpp"
 #include "FSPSvarIMFcontSFHSEDFamily.hpp"
+#include "FSPSvarIMFnebEmissionSED.hpp"
+#include "FSPSvarIMFnebEmissionSEDFamily.hpp"
 #include "FieldStrengthCellLibrary.hpp"
 #include "FileBand.hpp"
 #include "FileBorderWavelengthGrid.hpp"
@@ -376,6 +378,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<FSPSSED>();
     ItemRegistry::add<FSPSvarIMFSED>();
     ItemRegistry::add<FSPSvarIMFcontSFHSED>();
+    ItemRegistry::add<FSPSvarIMFnebEmissionSED>();
     ItemRegistry::add<BpassSED>();
     ItemRegistry::add<MappingsSED>();
     ItemRegistry::add<ToddlersSED>();
@@ -401,6 +404,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<FSPSSEDFamily>();
     ItemRegistry::add<FSPSvarIMFSEDFamily>();
     ItemRegistry::add<FSPSvarIMFcontSFHSEDFamily>();
+    ItemRegistry::add<FSPSvarIMFnebEmissionSEDFamily>();
     ItemRegistry::add<BpassSEDFamily>();
     ItemRegistry::add<FileSSPSEDFamily>();
     ItemRegistry::add<FileIndexedSEDFamily>();
