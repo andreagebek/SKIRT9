@@ -83,6 +83,8 @@
 #include "ExtragalacticUnits.hpp"
 #include "FSPSSED.hpp"
 #include "FSPSSEDFamily.hpp"
+#include "FSPSnebEmissionSED.hpp"
+#include "FSPSnebEmissionSEDFamily.hpp"
 #include "FSPSvarIMFSED.hpp"
 #include "FSPSvarIMFSEDFamily.hpp"
 #include "FSPSvarIMFcontSFHSED.hpp"
@@ -376,6 +378,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99ContSED>();
     ItemRegistry::add<Starburst99SED>();
     ItemRegistry::add<FSPSSED>();
+    ItemRegistry::add<FSPSnebEmissionSED>();
     ItemRegistry::add<FSPSvarIMFSED>();
     ItemRegistry::add<FSPSvarIMFcontSFHSED>();
     ItemRegistry::add<FSPSvarIMFnebEmissionSED>();
@@ -402,6 +405,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99ContSEDFamily>();
     ItemRegistry::add<Starburst99SEDFamily>();
     ItemRegistry::add<FSPSSEDFamily>();
+    ItemRegistry::add<FSPSnebEmissionSEDFamily>();
     ItemRegistry::add<FSPSvarIMFSEDFamily>();
     ItemRegistry::add<FSPSvarIMFcontSFHSEDFamily>();
     ItemRegistry::add<FSPSvarIMFnebEmissionSEDFamily>();
