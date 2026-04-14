@@ -299,7 +299,11 @@
 #include "ZubkoDustMix.hpp"
 #include "ZubkoGraphiteGrainSizeDistribution.hpp"
 #include "ZubkoPAHGrainSizeDistribution.hpp"
+#include "ZubkoLargeGraphiteGrainSizeDistribution.hpp"
+#include "ZubkoLargeSilicateGrainSizeDistribution.hpp"
 #include "ZubkoSilicateGrainSizeDistribution.hpp"
+#include "ZubkoSmallGraphiteGrainSizeDistribution.hpp"
+#include "ZubkoSmallSilicateGrainSizeDistribution.hpp"
 
 ////////////////////////////////////////////////////////////////////
 
@@ -625,7 +629,11 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<LogNormalGrainSizeDistribution>();
     ItemRegistry::add<ModifiedLogNormalGrainSizeDistribution>();
     ItemRegistry::add<SingleGrainSizeDistribution>();
+    ItemRegistry::add<ZubkoLargeGraphiteGrainSizeDistribution>();
+    ItemRegistry::add<ZubkoLargeSilicateGrainSizeDistribution>();
     ItemRegistry::add<ZubkoSilicateGrainSizeDistribution>();
+    ItemRegistry::add<ZubkoSmallGraphiteGrainSizeDistribution>();
+    ItemRegistry::add<ZubkoSmallSilicateGrainSizeDistribution>();
     ItemRegistry::add<ZubkoGraphiteGrainSizeDistribution>();
     ItemRegistry::add<ZubkoPAHGrainSizeDistribution>();
     ItemRegistry::add<HirashitaLogNormalGrainSizeDistribution>();
