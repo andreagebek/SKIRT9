@@ -219,6 +219,8 @@
 #include "PowerLawGrainSizeDistribution.hpp"
 #include "PredefinedBandWavelengthGrid.hpp"
 #include "ProbeSystem.hpp"
+#include "ProGenySED.hpp"
+#include "ProGenySEDFamily.hpp"
 #include "PseudoSersicGeometry.hpp"
 #include "QuarticSplineSmoothingKernel.hpp"
 #include "QuasarSED.hpp"
@@ -379,6 +381,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99SED>();
     ItemRegistry::add<FSPSSED>();
     ItemRegistry::add<BpassSED>();
+    ItemRegistry::add<ProGenySED>();
     ItemRegistry::add<MappingsSED>();
     ItemRegistry::add<ToddlersSED>();
     ItemRegistry::add<TabulatedSED>();
@@ -404,6 +407,7 @@ SimulationItemRegistry::SimulationItemRegistry(string version, string format)
     ItemRegistry::add<Starburst99SEDFamily>();
     ItemRegistry::add<FSPSSEDFamily>();
     ItemRegistry::add<BpassSEDFamily>();
+    ItemRegistry::add<ProGenySEDFamily>();
     ItemRegistry::add<FileSSPSEDFamily>();
     ItemRegistry::add<FileIndexedSEDFamily>();
     ItemRegistry::add<MappingsSEDFamily>();
