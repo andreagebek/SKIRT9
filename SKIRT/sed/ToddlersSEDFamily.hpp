@@ -28,6 +28,17 @@
     \em sedMode determines how the %SED is calculated and scaled:
       - SFRNormalized: SEDs pre-integrated over time and cloud mass spectrum, directly scaled by SFR
       - Cloud: SEDs for individual star-forming clouds with explicit time evolution
+      - SFRNormalizedVariableDust: as SFRNormalized, but with an additional dust-to-metal fraction
+        (\f$f_\mathrm{dust}\f$) axis, so the grain abundance per hydrogen atom (relative to the
+        solar-scaled dust-to-metal ratio) can be varied per import particle. \f$f_\mathrm{dust}=1\f$
+        corresponds to the solar-scaled dust-to-metal ratio. This library is built with an updated
+        grain model and includes the nebular continuum, so its \f$f_\mathrm{dust}=1\f$ slice is not
+        identical to the fixed-dust SFRNormalized library, although the bolometric luminosity per
+        unit SFR agrees to better than 0.1 per cent. Like SFRNormalized, it is available for both
+        \em sfrPeriod windows (10 and 30 Myr). This variant is provided as a separate
+        resource pack and leaves the SFRNormalized and Cloud modes unchanged. It is offered only in
+        the SFR-normalized form because adding the axis to the much larger Cloud-mode tables is
+        prohibitively expensive in storage.
 
     \em stellarTemplate determines the stellar population model, IMF, and stellar evolution:
       - SB99Kroupa100Sin: Starburst99 models with Kroupa IMF (0.1-100 \f$\mathrm{M}_\odot\f$) and
@@ -113,6 +124,10 @@
        - BPASS: range from 40 to 640 \f$\mathrm{cm}^{-3}\f$ (5 values)
     5. Cloud mass (Cloud mode only): the mass of the star-forming cloud
        - range from \f$10^5\f$ to \f$10^{6.75}~\mathrm{M}_\odot\f$ (8 values)
+    6. Dust-to-metal fraction (SFRNormalizedVariableDust mode only): the grain abundance per
+       hydrogen atom relative to the solar-scaled dust-to-metal ratio
+       - range from 0.02 to 1.00 (7 values); \f$f_\mathrm{dust}=1\f$ is the solar-scaled dust-to-metal
+         ratio (built with an updated grain model, so not identical to the fixed-dust SFRNormalized library)
 
     When using SFRNormalized mode, the parameters must appear in the following order, with the
     specified default units unless overridden by column header info:
@@ -123,6 +138,15 @@
     where \f$Z\f$ is the metallicity, \f$\mathrm{SFE}\f$ is the star formation efficiency,
     \f$n_{\text{cl}}\f$ is the cloud number density, and \f$\dot{M}_*\f$ is the star formation
     rate.
+
+    When using SFRNormalizedVariableDust mode, the dust-to-metal fraction is inserted before the
+    star formation rate, so the parameters must appear in the following order:
+
+    \f[ Z\,(\mathrm{dimensionless}) \quad \mathrm{SFE}\,(\mathrm{dimensionless}) \quad
+    n_{\text{cl}}\,(\mathrm{cm}^{-3}) \quad f_\mathrm{dust}\,(\mathrm{dimensionless}) \quad
+    \dot{M}_*\,(\mathrm{M}_\odot\,\mathrm{yr}^{-1}) \f]
+
+    where \f$f_\mathrm{dust}\f$ is the dust-to-metal fraction and the other symbols are as above.
 
     When using Cloud mode, the parameters must appear in the following order, with the specified
     default units unless overridden by column header info:
@@ -179,6 +203,9 @@
 
     - SKIRT9_Resources_TODDLERS (400 MB installed):
             all SFRNormalized-mode models
+    - SKIRT9_Resources_TODDLERS_VariableDust:
+            SFRNormalizedVariableDust-mode models (the SFR-normalized library with the added
+            dust-to-metal fraction axis)
     - SKIRT9_Resources_TODDLERS_Cloud_SB99_kroupa100 (50 GB installed):
             Cloud-mode models with Starburst99 and Kroupa IMF (0.1-100)
     - SKIRT9_Resources_TODDLERS_Cloud_BPASS_chab100 (43 GB installed):
@@ -190,9 +217,10 @@
 class ToddlersSEDFamily : public SEDFamily
 {
     /** The enumeration type indicating the SED calculation mode */
-    ENUM_DEF(SedMode, SFRNormalized, Cloud)
+    ENUM_DEF(SedMode, SFRNormalized, Cloud, SFRNormalizedVariableDust)
         ENUM_VAL(SedMode, SFRNormalized, "SEDs normalized by star formation rate")
         ENUM_VAL(SedMode, Cloud, "Individual cloud SEDs with time evolution")
+        ENUM_VAL(SedMode, SFRNormalizedVariableDust, "SFR-normalized SEDs with a variable dust-to-metal fraction axis")
     ENUM_END()
 
     /** The enumeration type indicating the stellar template to use */
@@ -231,7 +259,7 @@ class ToddlersSEDFamily : public SEDFamily
 
         PROPERTY_ENUM(sfrPeriod, SFRPeriod, "the SFR integration time period")
         ATTRIBUTE_DEFAULT_VALUE(sfrPeriod, "Period10Myr")
-        ATTRIBUTE_RELEVANT_IF(sfrPeriod, "sedModeSFRNormalized")
+        ATTRIBUTE_RELEVANT_IF(sfrPeriod, "sedModeSFRNormalized|sedModeSFRNormalizedVariableDust")
 
     ITEM_END()
 
@@ -269,8 +297,9 @@ public:
 
 private:
     // Only one of these tables will be used, depending on the sedMode
-    StoredTable<6> _cloudTable;          // 6D table: lambda, time, Z, SFE, n_cl, M_cl
-    StoredTable<4> _sfrNormalizedTable;  // 4D table: lambda, Z, SFE, n_cl
+    StoredTable<6> _cloudTable;                 // 6D table: lambda, time, Z, SFE, n_cl, M_cl
+    StoredTable<4> _sfrNormalizedTable;         // 4D table: lambda, Z, SFE, n_cl
+    StoredTable<5> _sfrNormalizedVarDustTable;  // 5D table: lambda, Z, SFE, n_cl, f_dust
 };
 
 //////////////////////////////////////////////////////////////////////
